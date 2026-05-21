@@ -855,3 +855,12 @@ body {
         width: 100%;
     }
 }
+
+/* ==========================================================================
+   AJUSTES FINOS DE LAYOUT (CORREÇÕES DE SOBREPOSIÇÃO)
+   ========================================================================== */
+/* Abre espaço para o badge absoluto não sobrepor o título nos cards com status (ex: empréstimo) */
+.card .badge-status ~ .card-header .card-title {
+    padding-right: 5.5rem;
+}
+

@@ -265,6 +265,13 @@ async function salvarLivro(event) {
     const id_autor = parseInt(document.getElementById("livro-autor").value) || null;
     const id_editora = parseInt(document.getElementById("livro-editora").value) || null;
 
+    // Validação local condizente com o back-end
+    const erroNome = validarNomeLivroJS(nome);
+    if (erroNome) {
+        exibirErroLocalModal(erroNome, "modal-livro-error");
+        return;
+    }
+
     const payload = {
         nome_livro: nome,
         id_editora: id_editora,
@@ -421,6 +428,31 @@ async function salvarLeitor(event) {
     const email = document.getElementById("leitor-email").value;
     const telefone = document.getElementById("leitor-telefone").value;
     const endereco = document.getElementById("leitor-endereco").value;
+
+    // Validações locais condizentes com o back-end
+    const erroNome = validarNomeJS(nome);
+    if (erroNome) {
+        exibirErroLocalModal(erroNome, "modal-leitor-error");
+        return;
+    }
+
+    const erroEmail = validarEmailJS(email);
+    if (erroEmail) {
+        exibirErroLocalModal(erroEmail, "modal-leitor-error");
+        return;
+    }
+
+    const erroTelefone = validarTelefoneJS(telefone);
+    if (erroTelefone) {
+        exibirErroLocalModal(erroTelefone, "modal-leitor-error");
+        return;
+    }
+
+    const erroEndereco = validarEnderecoJS(endereco);
+    if (erroEndereco) {
+        exibirErroLocalModal(erroEndereco, "modal-leitor-error");
+        return;
+    }
 
     const payload = { nome, email, telefone, endereco };
 
@@ -734,6 +766,8 @@ async function atualizarVisualizacaoEstante() {
         let countLido = 0;
 
         estanteItens.forEach(item => {
+            const dataConclusao = item.data_atualizacao ? new Date(item.data_atualizacao).toLocaleDateString("pt-BR") : null;
+            
             const cardHtml = `
                 <div class="estante-card" id="estante-card-${item.id_estante}">
                     <h5 class="estante-card-title">${item.nome_livro || "Livro"}</h5>
@@ -741,6 +775,12 @@ async function atualizarVisualizacaoEstante() {
                         <i data-lucide="user"></i>
                         <span>Leitor: ${item.nome_usuario || "Usuário"}</span>
                     </div>
+                    ${item.status === 'lido' && dataConclusao ? `
+                        <div class="estante-card-date" style="display: flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; color: var(--text-secondary); margin-top: -0.25rem; margin-bottom: 0.25rem;">
+                            <i data-lucide="calendar" style="width: 12px; height: 12px; color: var(--color-success);"></i>
+                            <span>Lido em: <strong>${dataConclusao}</strong></span>
+                        </div>
+                    ` : ""}
                     <div class="estante-card-actions">
                         <!-- Botão de mover status rápido -->
                         ${item.status === 'quero ler' ? `
@@ -957,6 +997,13 @@ async function salvarSubAutor(event) {
     fecharErroBanner("modal-sub-autor-error");
     
     const nome = document.getElementById("sub-autor-nome").value;
+
+    // Validação local condizente com o back-end
+    const erroNome = validarNomeJS(nome);
+    if (erroNome) {
+        exibirErroLocalModal(erroNome, "modal-sub-autor-error");
+        return;
+    }
     
     try {
         const res = await fetch(`${API_BASE_URL}/autores/`, {
@@ -995,6 +1042,13 @@ async function salvarSubEditora(event) {
     fecharErroBanner("modal-sub-editora-error");
     
     const nome = document.getElementById("sub-editora-nome").value;
+
+    // Validação local condizente com o back-end
+    const erroNome = validarNomeJS(nome);
+    if (erroNome) {
+        exibirErroLocalModal(erroNome, "modal-sub-editora-error");
+        return;
+    }
     
     try {
         const res = await fetch(`${API_BASE_URL}/editoras/`, {
@@ -1017,3 +1071,114 @@ async function salvarSubEditora(event) {
         document.getElementById("modal-sub-editora-error").innerText = "Erro de conexão.";
     }
 }
+
+// ==========================================================================
+// FUNÇÕES DE VALIDAÇÃO CONDIZENTES COM O BACK-END (PYTHON)
+// ==========================================================================
+
+function exibirErroLocalModal(mensagem, errorBannerId) {
+    const banner = document.getElementById(errorBannerId);
+    banner.innerHTML = `<strong>Ajuste o seguinte campo:</strong><br>• ${mensagem}`;
+    banner.classList.remove("hidden");
+}
+
+function validarNomeJS(nome) {
+    nome = nome.trim();
+    if (!nome) return "O nome não pode ser vazio";
+    if (nome.length < 3) return "O nome deve ter pelo menos 3 caracteres";
+    if (/\d/.test(nome)) return "O nome não pode conter números";
+    
+    // Começa e termina com letra (incluindo acentuadas brasileiras)
+    const regexLetraInicioFim = /^[a-zA-ZáàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ].*[a-zA-ZáàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]$/;
+    if (!regexLetraInicioFim.test(nome)) {
+        return "O nome não pode ter caracteres especiais no início nem no final";
+    }
+    return null;
+}
+
+function validarNomeLivroJS(nome) {
+    nome = nome.trim();
+    if (!nome) return "O nome do livro não pode ser vazio";
+    if (nome.length < 2) return "O nome do livro deve ter pelo menos 2 caracteres";
+    if (nome.length > 255) return "O nome do livro deve ter no máximo 255 caracteres";
+    if (nome.includes("  ")) return "O nome do livro não pode conter espaços duplos";
+    
+    const regexAlfanumericoInicioFim = /^[a-zA-Z0-9áàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ].*[a-zA-Z0-9áàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]$/;
+    if (!regexAlfanumericoInicioFim.test(nome)) {
+        return "O nome do livro deve começar e terminar com letra ou número";
+    }
+    return null;
+}
+
+function validarEmailJS(email) {
+    email = email.trim();
+    if (!email) return "O e-mail não pode ser vazio";
+    if (/\s/.test(email)) return "O e-mail não pode conter espaços em branco";
+    if ((email.match(/@/g) || []).length !== 1) return "O e-mail deve conter exatamente um '@'";
+    
+    const partes = email.split("@");
+    const local = partes[0];
+    const dominio = partes[1];
+    
+    if (!local || !dominio) return "O e-mail não pode ter a parte antes ou depois do '@' vazia";
+    if (email.includes("..")) return "O e-mail não pode conter pontos consecutivos (..)";
+    if (local.startsWith(".") || local.endsWith(".")) return "A parte antes do '@' não pode começar ou terminar com ponto";
+    
+    const regexAlfanumericoInicioFim = /^[a-zA-Z0-9].*[a-zA-Z0-9]$/;
+    if (!regexAlfanumericoInicioFim.test(local)) return "A parte antes do '@' deve começar e terminar com letra ou número";
+    
+    const regexLocal = /^[a-zA-Z0-9._-]+$/;
+    if (!regexLocal.test(local)) return "Antes do '@', use apenas letras, números, ponto, hífen e sublinhado";
+    
+    const regexDominio = /^[a-zA-Z0-9.-]+$/;
+    if (!regexDominio.test(dominio)) return "No domínio do e-mail, use apenas letras, números, ponto e hífen";
+    
+    if (!dominio.endsWith(".com")) return "O e-mail deve terminar com '.com'";
+    if (email.length < 11) return "O e-mail deve ter pelo menos 11 caracteres";
+    
+    return null;
+}
+
+function validarEnderecoJS(endereco) {
+    endereco = endereco.trim();
+    if (!endereco) return "O endereço não pode ser vazio";
+    if (endereco.length < 10) return "O endereço deve ter pelo menos 10 caracteres";
+    if (endereco.length > 150) return "O endereço deve ter no máximo 150 caracteres";
+    if (/[\r\n\t]/.test(endereco)) return "O endereço não pode conter tabulação nem quebra de linha";
+    
+    const regexAlfanumericoInicioFim = /^[a-zA-Z0-9áàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ].*[a-zA-Z0-9áàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]$/;
+    if (!regexAlfanumericoInicioFim.test(endereco)) return "O endereço deve começar e terminar com letra ou número";
+    if (!/[a-zA-ZáàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]/.test(endereco)) return "O endereço deve conter pelo menos uma letra";
+    if (endereco.includes("  ")) return "O endereço não pode conter dois espaços seguidos";
+    
+    return null;
+}
+
+function validarTelefoneJS(telefone) {
+    telefone = telefone.trim();
+    if (!telefone) return "O telefone não pode ser vazio";
+    
+    let apenasDigitos = telefone.replace(/\D/g, "");
+    if (apenasDigitos.startsWith("55")) {
+        apenasDigitos = apenasDigitos.substring(2);
+    }
+    
+    if (apenasDigitos.length !== 10 && apenasDigitos.length !== 11) {
+        return "Use DDD + número (fixo com 8 dígitos ou celular com 9)";
+    }
+    
+    const ddd = apenasDigitos.substring(0, 2);
+    const numero = apenasDigitos.substring(2);
+    
+    if (ddd[0] === "0" || ddd === "00") {
+        return "O DDD do telefone é inválido";
+    }
+    
+    if (numero.length === 9) {
+        if (numero[0] !== "9") {
+            return "Celular deve começar com 9 após o DDD";
+        }
+    }
+    return null;
+}
+

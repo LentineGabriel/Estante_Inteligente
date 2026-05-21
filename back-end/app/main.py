@@ -1,9 +1,11 @@
 import uvicorn
-from fastapi import FastAPI
+from fastapi import FastAPI, status
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 
 from app.api.router import api_router
 from app.core.config import settings
+from app.core.database import get_connection
 
 # Instancia a aplicação FastAPI definindo o título e versão de forma dinâmica
 app = FastAPI(
@@ -35,6 +37,38 @@ def root():
         "status": "healthy",
         "version": settings.PROJECT_VERSION
     }
+
+@app.get("/health", tags=["Observabilidade"])
+def health():
+    """
+    Endpoint robusto de checagem de saúde (healthcheck) de acordo com padrões DevOps.
+    Tenta estabelecer conexões de teste com serviços externos dependentes (Banco de Dados).
+    """
+    db_status = "connected"
+    http_status = status.HTTP_200_OK
+    
+    try:
+        # Tenta estabelecer uma conexão rápida e executa um SELECT 1 para teste físico
+        conn = get_connection()
+        with conn.cursor() as cur:
+            cur.execute("SELECT 1;")
+            cur.fetchone()
+        conn.close()
+    except Exception as e:
+        # Caso ocorra falha de rede, timeout ou credenciais inválidas do banco
+        db_status = f"disconnected: {str(e)}"
+        http_status = status.HTTP_503_SERVICE_UNAVAILABLE
+
+    response_content = {
+        "status": "healthy" if http_status == status.HTTP_200_OK else "unhealthy",
+        "database": db_status,
+        "version": settings.PROJECT_VERSION
+    }
+    
+    return JSONResponse(
+        status_code=http_status,
+        content=response_content
+    )
 
 if __name__ == "__main__":
     # Inicializa o servidor web Uvicorn caso este arquivo seja rodado diretamente
