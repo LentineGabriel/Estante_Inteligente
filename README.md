@@ -14,7 +14,6 @@ Este projeto representa o trabalho acadêmico desenvolvido por alunos da **Unive
 | **Ana Clara Menezes Maciel** | `2225101484` |
 | **Murillo do Nascimento Silva** | `2225102975` |
 | **Bruno Pereira Silva** | `2225105721` |
-| **Danyelle dos Santos Hengler** | `2325100583` |
 | **Gustavo Oliveira Santos** | `2225105333` |
 | **Rafael Azevedo Santos** | `2325103526` |
 
