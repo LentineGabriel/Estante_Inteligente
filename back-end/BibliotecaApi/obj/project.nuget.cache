@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "zmYoycj5j8U=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\gabri\\OneDrive\\Desktop\\Estante_Inteligente\\EstanteInteligente\\BibliotecaApi\\BibliotecaApi.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\gabri\\.nuget\\packages\\npgsql\\10.0.2\\npgsql.10.0.2.nupkg.sha512"
+  ],
+  "logs": []
+}

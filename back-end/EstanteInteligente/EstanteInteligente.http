@@ -1,0 +1,6 @@
+@EstanteInteligente_HostAddress = http://localhost:5152
+
+GET {{EstanteInteligente_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

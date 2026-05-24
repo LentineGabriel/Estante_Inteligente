@@ -3,7 +3,7 @@
 // INTEGRAÇÃO ASSÍNCRONA COM A API FASTAPI
 // ==========================================================================
 
-const API_BASE_URL = "http://localhost:8000";
+const API_BASE_URL = "https://localhost:7280";
 
 // Estado Global da Aplicação
 const state = {
@@ -461,7 +461,7 @@ async function salvarLeitor(event) {
         if (id) {
             // Atualização parcial de campos com o método PATCH que criamos no backend!
             res = await fetch(`${API_BASE_URL}/usuarios/${id}`, {
-                method: "PATCH",
+                method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(payload)
             });
@@ -655,7 +655,7 @@ async function salvarEmprestimo(event) {
 
 async function registrarDevolucao(id) {
     try {
-        const res = await fetch(`${API_BASE_URL}/emprestimos/${id}/devolucao`, { method: "POST" });
+        const res = await fetch(`${API_BASE_URL}/emprestimos/${id}/devolver`, { method: "PUT" });
         if (res.ok) {
             carregarEmprestimos();
         } else {
@@ -668,7 +668,7 @@ async function registrarDevolucao(id) {
 
 async function marcarComoAtrasado(id) {
     try {
-        const res = await fetch(`${API_BASE_URL}/emprestimos/${id}/atrasado`, { method: "POST" });
+        const res = await fetch(`${API_BASE_URL}/emprestimos/${id}/atrasado`, { method: "PUT" });
         if (res.ok) {
             carregarEmprestimos();
         } else {
@@ -756,7 +756,7 @@ async function atualizarVisualizacaoEstante() {
     }
 
     try {
-        const res = await fetch(`${API_BASE_URL}/estante/usuarios/${state.estanteUsuarioAtivo}`);
+        const res = await fetch(`${API_BASE_URL}/estante/usuario/${state.estanteUsuarioAtivo}`);
         if (!res.ok) throw new Error();
         
         const estanteItens = await res.json();
@@ -860,7 +860,7 @@ async function removerDaEstante(idLivro) {
     
     if (confirm("Quer tirar este livro da sua estante virtual?")) {
         try {
-            const res = await fetch(`${API_BASE_URL}/estante/usuarios/${state.estanteUsuarioAtivo}/livros/${idLivro}`, {
+            const res = await fetch(`${API_BASE_URL}/estante/usuario/${state.estanteUsuarioAtivo}/livro/${idLivro}`, {
                 method: "DELETE"
             });
             if (res.ok) {
