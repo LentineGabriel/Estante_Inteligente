@@ -1,16 +1,7 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\gabri\\OneDrive\\Desktop\\Python_Biblioteca_Faculdade\\back-end\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{F82B9922-9BF2-667F-A11F-94FFC94B1725}|EstanteInteligente\\EstanteInteligente.csproj|c:\\users\\gabri\\onedrive\\desktop\\python_biblioteca_faculdade\\back-end\\estanteinteligente\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F82B9922-9BF2-667F-A11F-94FFC94B1725}|EstanteInteligente\\EstanteInteligente.csproj|solutionrelative:estanteinteligente\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F82B9922-9BF2-667F-A11F-94FFC94B1725}|EstanteInteligente\\EstanteInteligente.csproj|c:\\users\\gabri\\onedrive\\desktop\\python_biblioteca_faculdade\\back-end\\estanteinteligente\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{F82B9922-9BF2-667F-A11F-94FFC94B1725}|EstanteInteligente\\EstanteInteligente.csproj|solutionrelative:estanteinteligente\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    }
-  ],
+  "WorkspaceRootPath": "C:\\Users\\gabri\\OneDrive\\Desktop\\Estante_Inteligente\\back-end\\",
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -18,7 +9,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 347,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": -1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -39,31 +30,6 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\gabri\\OneDrive\\Desktop\\Python_Biblioteca_Faculdade\\back-end\\EstanteInteligente\\appsettings.json",
-              "RelativeDocumentMoniker": "EstanteInteligente\\appsettings.json",
-              "ToolTip": "C:\\Users\\gabri\\OneDrive\\Desktop\\Python_Biblioteca_Faculdade\\back-end\\EstanteInteligente\\appsettings.json",
-              "RelativeToolTip": "EstanteInteligente\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-05-24T22:13:43.43Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\gabri\\OneDrive\\Desktop\\Python_Biblioteca_Faculdade\\back-end\\EstanteInteligente\\Program.cs",
-              "RelativeDocumentMoniker": "EstanteInteligente\\Program.cs",
-              "ToolTip": "C:\\Users\\gabri\\OneDrive\\Desktop\\Python_Biblioteca_Faculdade\\back-end\\EstanteInteligente\\Program.cs",
-              "RelativeToolTip": "EstanteInteligente\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAcwA0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-24T22:09:50.76Z",
-              "EditorCaption": ""
             }
           ]
         }

@@ -7,8 +7,8 @@ services:
     restart: always
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password123
-      POSTGRES_DB: biblioteca
+      POSTGRES_PASSWORD: P57u9j
+      POSTGRES_DB: postgres
     ports:
       - "5432:5432"
     volumes:
@@ -17,25 +17,10 @@ services:
       - ./back-end/init.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
       # Verifica se o banco de dados está de fato saudável e pronto para conexões
-      test: ["CMD-SHELL", "pg_isready -U postgres -d biblioteca"]
+      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
       interval: 5s
       timeout: 5s
       retries: 5
-
-  web:
-    build:
-      context: ./back-end
-      dockerfile: Dockerfile
-    container_name: biblioteca_api
-    restart: always
-    ports:
-      - "8000:8000"
-    environment:
-      # Aponta para o serviço 'db' na rede Docker interna em vez de localhost
-      - DATABASE_URL=postgresql://postgres:password123@db:5432/biblioteca
-    depends_on:
-      db:
-        condition: service_healthy
 
 volumes:
   postgres_data:

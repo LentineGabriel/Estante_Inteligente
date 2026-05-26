@@ -104,9 +104,6 @@ function inicializarEstanteSelectHeader() {
     estanteHeader.after(filterDiv);
 }
 
-// ==========================================================================
-// TRATAMENTO DE ERROS AMIGÁVEL EM PORTUGUÊS (VALIDAÇÕES PYDANTIC)
-// ==========================================================================
 async function exibirErroModal(response, errorBannerId) {
     const banner = document.getElementById(errorBannerId);
     banner.innerHTML = "";
@@ -115,7 +112,6 @@ async function exibirErroModal(response, errorBannerId) {
     try {
         const errData = await response.json();
         
-        // Trata erro de validação de Schema do Pydantic (422 Unprocessable Entity)
         if (response.status === 422 && Array.isArray(errData.detail)) {
             let errorMsg = "<strong>Erro de digitação. Por favor, ajuste:</strong><br>";
             
@@ -123,7 +119,6 @@ async function exibirErroModal(response, errorBannerId) {
                 const field = err.loc[err.loc.length - 1]; // Pega o nome do campo com erro
                 const msgOriginal = err.msg;
                 
-                // Traduz e embeleza as validações core do Pydantic para português amigável
                 if (field === "email") {
                     errorMsg += `• <strong>E-mail inválido</strong>: Use o formato correto (ex: nome@dominio.com).<br>`;
                 } else if (field === "telefone") {
@@ -211,7 +206,7 @@ async function carregarLivros() {
             <div class="empty-state">
                 <i data-lucide="wifi-off" style="color: var(--color-danger);"></i>
                 <h3>Falha ao se conectar com a API</h3>
-                <p>Não foi possível buscar os livros. Verifique se o servidor do backend está ligado executando <code>python -m uvicorn app.main:app --reload</code>.</p>
+                <p>Não foi possível buscar os livros. Verifique se o servidor do backend está ligado.</p>
             </div>
         `;
         inicializarIcones();
@@ -1071,10 +1066,6 @@ async function salvarSubEditora(event) {
         document.getElementById("modal-sub-editora-error").innerText = "Erro de conexão.";
     }
 }
-
-// ==========================================================================
-// FUNÇÕES DE VALIDAÇÃO CONDIZENTES COM O BACK-END (PYTHON)
-// ==========================================================================
 
 function exibirErroLocalModal(mensagem, errorBannerId) {
     const banner = document.getElementById(errorBannerId);
