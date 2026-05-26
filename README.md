@@ -75,16 +75,14 @@ docker compose up -d
 3. O Visual Studio irá rodar o servidor em segundo plano e a API estará ativa (com HTTPS) na porta **7280**. O Swagger será exibido para testes diretos dos Endpoints.
 
 ### Passo 3: Acessar a Interface do Usuário (Front-end)
-Para evitar problemas de CORS e visualizar corretamente o sistema:
-1. Abra o terminal na pasta do front-end:
-    ```bash
-    cd front-end
-    ```
-2. Suba um servidor local simples utilizando Python:
-    ```bash
-    python -m http.server 8000
-    ```
-3. Acesse o seguinte endereço no seu navegador: **[http://localhost:8000](http://localhost:8000)**
+O nosso front-end é uma aplicação web construída com HTML, CSS e JavaScript puros. Para evitar problemas de bloqueio de segurança dos navegadores (erros de CORS) ao abrir os arquivos localmente, recomendamos o uso de um servidor web simples.
+
+A forma mais prática é utilizar a extensão **Live Server** do Visual Studio Code:
+
+1. Abra a pasta `front-end` no seu Visual Studio Code.
+2. Clique com o botão direito no arquivo `index.html`.
+3. Selecione a opção **"Open with Live Server"** (ou clique em "Go Live" na barra inferior).
+4. O seu navegador padrão será aberto automaticamente com a interface do sistema funcionando e conectada ao seu Back-end em C#.
 
 ---
 
